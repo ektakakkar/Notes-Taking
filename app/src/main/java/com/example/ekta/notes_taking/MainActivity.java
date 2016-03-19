@@ -8,9 +8,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
@@ -18,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
     EditText notes;
     Button buttonAdd;
     String notesval;
+    Button save;
+    Button delete;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,14 +33,19 @@ public class MainActivity extends AppCompatActivity {
 
         notes = (EditText) findViewById(R.id.notes);
         buttonAdd = (Button) findViewById(R.id.buttonadd);
+        save=(Button) findViewById(R.id.SaveButton);
+        delete=(Button) findViewById(R.id.delete);
 
-        buttonAdd.setOnClickListener(new View.OnClickListener() {
+                buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 notesval = notes.getText().toString();
                 Toast.makeText(getApplicationContext() , notesval + " is saved" , Toast.LENGTH_LONG ).show();
             }
         });
+
+
+
 
 
 
@@ -60,6 +69,12 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+
+
+
+
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -71,6 +86,8 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_settings) {
             return true;
         }
+
+
 
         return super.onOptionsItemSelected(item);
     }

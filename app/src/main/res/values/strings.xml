@@ -2,5 +2,6 @@
     <string name="app_name">Notes_Taking</string>
     <string name="action_settings">Settings</string>
     <string name="text_button">Add new note</string>
-
+<string name="Save">Save</string>
+<string name="Delete">Delete</string>
 </resources>
