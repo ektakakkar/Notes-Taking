@@ -1,5 +1,6 @@
 package com.example.ekta.notes_taking;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -19,6 +20,7 @@ import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -59,7 +61,24 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+         recyclerView.setOnLongClickListener(new View.OnLongClickListener() {
+             @Override
+             public boolean onLongClick(View v) {
 
+
+                 PopupMenu popupMenu = new PopupMenu(MainActivity.this, v);
+                 popupMenu.getMenuInflater().inflate(R.menu.notes_popup, popupMenu.getMenu());
+
+                 popupMenu.getMenu().add(1, R.id.Edit, 1, "Edit");
+                 popupMenu.getMenu().add(1, R.id.Delete, 2, "Delete");
+
+                  
+                 popupMenu.show();
+                 return true;
+             }
+
+
+         });
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -87,6 +106,28 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
+public boolean onMenuItemClick(MenuItem item){
+    switch (item.getItemId()) {
+        case R.id.Edit :
+             //recyclerView.save();
+             Toast.makeText(this,"Note Edited",Toast.LENGTH_LONG).show();
+            return true;
+
+
+
+        case R.id.Delete :
+            //recyclerView.delete();
+            Toast.makeText(this,"Note Deleted Permanently",Toast.LENGTH_LONG).show();
+            return true;
+
+
+        default:
+            return true;
+    }
+
+}
 
 
 
