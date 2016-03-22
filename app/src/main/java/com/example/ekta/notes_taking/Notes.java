@@ -5,6 +5,9 @@ import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by EKTA on 20/03/16.
  */
@@ -29,8 +32,8 @@ public class Notes extends Model {
         this.detail = detail;
     }
 
-    public static Notes getNotes() {
-        return new Select().from(Notes.class).orderBy("RANDOM()").executeSingle();
+    public static List<Notes> getNotes() {
+        return new Select().from(Notes.class).execute();
     }
 
 
