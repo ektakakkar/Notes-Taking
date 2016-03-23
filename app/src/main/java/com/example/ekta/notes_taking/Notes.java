@@ -3,6 +3,8 @@ package com.example.ekta.notes_taking;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Delete;
+import com.activeandroid.query.From;
 import com.activeandroid.query.Select;
 
 import java.util.ArrayList;
@@ -32,12 +34,37 @@ public class Notes extends Model {
         this.detail = detail;
     }
 
+
+
+    public static Notes getRandom() {
+        return new Select().from(Notes.class).orderBy("Title").executeSingle();
+    }
+
+
+    /*public static From getRandom(String title){
+        return new Select()
+                .from(Notes.class)
+                .where("Title = ?", title.getBytes())
+                .orderBy("RANDOM()")
+                .executeSingle();
+
+    }
+*/
+
+
     public static List<Notes> getNotes() {
         return new Select().from(Notes.class).execute();
     }
 
 
+    public static void update(Notes notes) {
+        getNotes().add(1, notes);
+    }
 
+    public static void delete(Notes notes){
+
+        notes.delete();
+   }
 
 }
 

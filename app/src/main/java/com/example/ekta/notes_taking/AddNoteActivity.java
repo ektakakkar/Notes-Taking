@@ -43,6 +43,10 @@ public class AddNoteActivity extends AppCompatActivity {
                 note.detail = detail.getText().toString();
                 note.save();
 
+
+
+
+
                 //Notes N = Notes.getNotes();
                 //Log.v("Note", N.title);
                 Snackbar.make(v, "Replace with your own action", Snackbar.LENGTH_LONG)

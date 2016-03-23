@@ -10,6 +10,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,12 +35,16 @@ public class MainActivity extends AppCompatActivity {
 
     Button delete;
     ImageView imageview;
+    RecyclerView Delete;
 
     RecyclerView recyclerView;
     LinearLayoutManager linearLayoutManager;
     NotesAdapter notesAdapter;
 
     ArrayList<Notes> allNotesFromDB;
+    String TAG = "MainActivity";
+
+
 
 
 
@@ -59,26 +65,17 @@ public class MainActivity extends AppCompatActivity {
         notesAdapter = new NotesAdapter(allNotesFromDB);
         recyclerView.setAdapter(notesAdapter);
 
+        recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getApplicationContext(), recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Log.d(TAG, "onClick");
+            }
 
-
-         recyclerView.setOnLongClickListener(new View.OnLongClickListener() {
-             @Override
-             public boolean onLongClick(View v) {
-
-
-                 PopupMenu popupMenu = new PopupMenu(MainActivity.this, v);
-                 popupMenu.getMenuInflater().inflate(R.menu.notes_popup, popupMenu.getMenu());
-
-                 popupMenu.getMenu().add(1, R.id.Edit, 1, "Edit");
-                 popupMenu.getMenu().add(1, R.id.Delete, 2, "Delete");
-
-                  
-                 popupMenu.show();
-                 return true;
-             }
-
-
-         });
+            @Override
+            public void onItemLongClick(View view, int position) {
+                Log.d(TAG, "onLongClick");
+            }
+        }));
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -108,17 +105,27 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-public boolean onMenuItemClick(MenuItem item){
+/*
+public boolean OnLongClick(MenuItem item){
+
+    RecyclerView Edit;
+    RecyclerView Delete;
+
+    Edit=(RecyclerView) findViewById(R.id.Edit);
+    Delete=(RecyclerView) findViewById(R.id.Delete);
+
+
+
     switch (item.getItemId()) {
         case R.id.Edit :
-             //recyclerView.save();
+
              Toast.makeText(this,"Note Edited",Toast.LENGTH_LONG).show();
             return true;
 
 
 
         case R.id.Delete :
-            //recyclerView.delete();
+
             Toast.makeText(this,"Note Deleted Permanently",Toast.LENGTH_LONG).show();
             return true;
 
@@ -127,7 +134,9 @@ public boolean onMenuItemClick(MenuItem item){
             return true;
     }
 
+
 }
+*/
 
 
 
@@ -147,4 +156,5 @@ public boolean onMenuItemClick(MenuItem item){
 
         return super.onOptionsItemSelected(item);
     }
+
 }
