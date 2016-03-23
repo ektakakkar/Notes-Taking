@@ -41,16 +41,10 @@ public class Notes extends Model {
     }
 
 
-    /*public static From getRandom(String title){
-        return new Select()
-                .from(Notes.class)
-                .where("Title = ?", title.getBytes())
-                .orderBy("RANDOM()")
+    public static Notes getNote(int id){
+        return new Select().from(Notes.class).where("id = ?", id)
                 .executeSingle();
-
     }
-*/
-
 
     public static List<Notes> getNotes() {
         return new Select().from(Notes.class).execute();

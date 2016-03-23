@@ -10,7 +10,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.GestureDetector;
+import android.view.MenuInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
@@ -27,7 +29,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnCreateContextMenuListener{
 
     EditText notes;
     Button buttonAdd;
@@ -44,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<Notes> allNotesFromDB;
     String TAG = "MainActivity";
 
-
+    int position;
 
 
 
@@ -65,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
         notesAdapter = new NotesAdapter(allNotesFromDB);
         recyclerView.setAdapter(notesAdapter);
 
+        registerForContextMenu(recyclerView);
+
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getApplicationContext(), recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
@@ -73,7 +77,9 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onItemLongClick(View view, int position) {
-                Log.d(TAG, "onLongClick");
+                Log.d(TAG, position + "");
+                setPosition(position);
+                view.showContextMenu();
             }
         }));
 
@@ -90,6 +96,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void setPosition(int position){
+        this.position = position;
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -100,43 +110,6 @@ public class MainActivity extends AppCompatActivity {
     public void setDataset(){
         this.allNotesFromDB = (ArrayList<Notes>) Notes.getNotes();
     }
-
-
-
-
-
-/*
-public boolean OnLongClick(MenuItem item){
-
-    RecyclerView Edit;
-    RecyclerView Delete;
-
-    Edit=(RecyclerView) findViewById(R.id.Edit);
-    Delete=(RecyclerView) findViewById(R.id.Delete);
-
-
-
-    switch (item.getItemId()) {
-        case R.id.Edit :
-
-             Toast.makeText(this,"Note Edited",Toast.LENGTH_LONG).show();
-            return true;
-
-
-
-        case R.id.Delete :
-
-            Toast.makeText(this,"Note Deleted Permanently",Toast.LENGTH_LONG).show();
-            return true;
-
-
-        default:
-            return true;
-    }
-
-
-}
-*/
 
 
 
@@ -157,4 +130,32 @@ public boolean OnLongClick(MenuItem item){
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.notes_popup, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()) {
+            case R.id.Edit:
+                //editNote(info.id);
+                return true;
+            case R.id.Delete:
+
+                Notes note = allNotesFromDB.get(position);
+                Notes.delete(note);
+                allNotesFromDB.remove(position);
+                notesAdapter.notifyDataSetChanged();
+                //deleteNote(info.id);
+                return true;
+            case  R.id.Share:
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
+    }
 }

@@ -1,7 +1,9 @@
 package com.example.ekta.notes_taking;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -43,7 +45,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder>{
         return noteItems.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
         TextView details;
         public ViewHolder(View itemView) {
@@ -51,6 +53,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder>{
             imageView = (ImageView)itemView.findViewById(R.id.imageview);
             details = (TextView)itemView.findViewById(R.id.note_detail);
         }
+
     }
 
 }
