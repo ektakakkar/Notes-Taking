@@ -7,4 +7,17 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_bold"
+        android:orderInCategory="100"
+        android:title="Bold"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_italic"
+        app:showAsAction="never"
+        android:title="Italic"
+        android:orderInCategory="100"/>
 </menu>
+

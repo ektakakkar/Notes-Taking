@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item name="delete" type="id">delete</item>
+    <item name="Bold" type="id">Bold</item>
+    <item name="Italics" type="id">Italics</item>
 </resources>

@@ -4,6 +4,10 @@
     tools:context="com.example.ekta.notes_taking.MainActivity">
 
 
+    <item android:id="@+id/Open"
+          android:title="Open"
+          android:visible="true"/>
+
     <item
         android:id="@+id/Edit"
         android:title="Edit"
@@ -19,7 +23,8 @@
         android:id="@+id/Share"
         android:orderInCategory="100"
         android:title="Share"
-        app:showAsAction="never" />
+        app:showAsAction="never"
+        />
 
 
 </menu>

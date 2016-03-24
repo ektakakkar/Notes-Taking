@@ -23,7 +23,6 @@
             </intent-filter>
         </activity>
 
-
         <meta-data
             android:name="AA_DB_NAME"
             android:value="Notes-1.db" />
@@ -34,6 +33,10 @@
         <activity
             android:name=".AddNoteActivity"
             android:label="@string/title_activity_add_note"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Main2Activity"
+            android:label="@string/title_activity_main2"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

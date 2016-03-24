@@ -6,6 +6,7 @@ import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Delete;
 import com.activeandroid.query.From;
 import com.activeandroid.query.Select;
+import com.activeandroid.query.Update;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +53,12 @@ public class Notes extends Model {
 
 
     public static void update(Notes notes) {
-        getNotes().add(1, notes);
+        new Update(Notes.class)
+                .set("details = ?")
+                .where("title=?",notes.getId())
+                .execute();
+
+
     }
 
     public static void delete(Notes notes){
