@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,6 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:fillViewport = "true"
     tools:context="com.example.ekta.notes_taking.MainActivity"
     android:background="@android:color/white"
     tools:showIn="@layout/activity_main">
@@ -27,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="title"
-            android:id="@+id/notes"/>
+            android:id="@+id/title"/>
 
         <EditText
             android:inputType="textMultiLine"
@@ -36,8 +37,8 @@
             android:scrollbars="vertical"
             android:id="@+id/detail"
             android:hint="details"
-
-            android:lines="8"
+            android:textStyle="bold|italic"
+            android:lines="4"
 
             />
         <Button
@@ -47,11 +48,6 @@
             android:id="@+id/buttonadd"
             android:text="@string/text_button" />
 
-
-
-
-
-
     </LinearLayout>
 
-</RelativeLayout>
+</ScrollView>

@@ -42,7 +42,7 @@ public class Notes extends Model {
     }
 
 
-    public static Notes getNote(int id){
+    public static Notes getNote(long id){
         return new Select().from(Notes.class).where("id = ?", id)
                 .executeSingle();
     }
@@ -52,14 +52,6 @@ public class Notes extends Model {
     }
 
 
-    public static void update(Notes notes) {
-        new Update(Notes.class)
-                .set("details = ?")
-                .where("title=?",notes.getId())
-                .execute();
-
-
-    }
 
     public static void delete(Notes notes){
 

@@ -1,5 +1,6 @@
 package com.example.ekta.notes_taking;
 
+import android.content.ActivityNotFoundException;
 import android.content.ClipData;
 import android.content.Intent;
 import android.net.Uri;
@@ -26,11 +27,12 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements View.OnCreateContextMenuListener{
+public class MainActivity extends AppCompatActivity implements View.OnCreateContextMenuListener {
 
     EditText notes;
     Button buttonAdd;
@@ -51,7 +53,6 @@ public class MainActivity extends AppCompatActivity implements View.OnCreateCont
     int position;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements View.OnCreateCont
         setSupportActionBar(toolbar);
 
 
-        recyclerView = (RecyclerView)findViewById(R.id.note_recycler_view);
+        recyclerView = (RecyclerView) findViewById(R.id.note_recycler_view);
         recyclerView.setHasFixedSize(true);
 
         linearLayoutManager = new LinearLayoutManager(this);
@@ -69,7 +70,6 @@ public class MainActivity extends AppCompatActivity implements View.OnCreateCont
         setDataset();
         notesAdapter = new NotesAdapter(allNotesFromDB);
         recyclerView.setAdapter(notesAdapter);
-
 
 
         registerForContextMenu(recyclerView);
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements View.OnCreateCont
 
     }
 
-    public void setPosition(int position){
+    public void setPosition(int position) {
         this.position = position;
     }
 
@@ -112,13 +112,9 @@ public class MainActivity extends AppCompatActivity implements View.OnCreateCont
         return true;
     }
 
-    public void setDataset(){
+    public void setDataset() {
         this.allNotesFromDB = (ArrayList<Notes>) Notes.getNotes();
     }
-
-
-
-
 
 
     @Override
@@ -131,66 +127,30 @@ public class MainActivity extends AppCompatActivity implements View.OnCreateCont
     @Override
     public boolean onContextItemSelected(MenuItem item) {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        Notes note;
         switch (item.getItemId()) {
-            case R.id.Open:
-             Notes.getNotes();
-                return true;
 
             case R.id.Edit:
-              Notes note2= allNotesFromDB.get(position);
-                int startpos;
-                int endpos;
+                note  = allNotesFromDB.get(position);
+                long id = note.getId();
+                Intent intent = new Intent(this, AddNoteActivity.class);
+                intent.putExtra("ID" , id);
+                startActivity(intent);
+                break;
 
-                
-                Notes.update(note2);
-                allNotesFromDB.add(position,note2);
-                notesAdapter.notifyDataSetChanged();
-                return true;
             case R.id.Delete:
-                Notes note = allNotesFromDB.get(position);
+                note = allNotesFromDB.get(position);
                 Notes.delete(note);
                 allNotesFromDB.remove(position);
                 notesAdapter.notifyDataSetChanged();
                 //deleteNote(info.id);
-                return true;
-            case  R.id.Share:
-
-
-                Log.i("Send email", "");
-                String[] TO = {""};
-                String[] CC = {""};
-
-                Intent emailIntent = new Intent(Intent.ACTION_SEND);
-
-                emailIntent.setData(Uri.parse("mailto:"));
-                emailIntent.setType("text/plain");
-                emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
-                emailIntent.putExtra(Intent.EXTRA_CC, CC);
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Your subject");
-                emailIntent.putExtra(Intent.EXTRA_TEXT, "Email message goes here");
-
-                try {
-                    startActivity(Intent.createChooser(emailIntent, "Send mail..."));
-                    finish();
-                    Log.i("Finished sending email...", "");
-                }
-                catch (android.content.ActivityNotFoundException ex) {
-                    Toast.makeText(MainActivity.this, "There is no email client installed.", Toast.LENGTH_SHORT).show();
-                }
-
-                startActivity(Intent.createChooser(emailIntent, "Send Email"));
-                emailIntent.putExtra(Intent.EXTRA_EMAIL, notesval);
-                return true;
-            default:
-                return super.onContextItemSelected(item);
+                break;
         }
-    }
+
+            return true;
 
 
-
-
-    @Override
-
+    /*@Override
     public boolean onOptionsItemSelected(MenuItem item) {
 
         int pos;
@@ -216,5 +176,6 @@ public class MainActivity extends AppCompatActivity implements View.OnCreateCont
                 Toast.makeText(this,"change to italics",Toast.LENGTH_LONG).show();
         }
         return super.onOptionsItemSelected(item);
+    }*/
     }
 }

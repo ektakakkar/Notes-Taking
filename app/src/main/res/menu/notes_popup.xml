@@ -4,9 +4,6 @@
     tools:context="com.example.ekta.notes_taking.MainActivity">
 
 
-    <item android:id="@+id/Open"
-          android:title="Open"
-          android:visible="true"/>
 
     <item
         android:id="@+id/Edit"
