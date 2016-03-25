@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements View.OnCreateCont
                 note  = allNotesFromDB.get(position);
                 long id = note.getId();
                 Intent intent = new Intent(this, AddNoteActivity.class);
-                intent.putExtra("ID" , id);
+                intent.putExtra("ID", id);
                 startActivity(intent);
                 break;
 
@@ -145,6 +145,27 @@ public class MainActivity extends AppCompatActivity implements View.OnCreateCont
                 notesAdapter.notifyDataSetChanged();
                 //deleteNote(info.id);
                 break;
+
+            case R.id.Share:
+                note = allNotesFromDB.get(position);
+/*                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "Title: " + note.title + "\n" + "Details: " + note.detail);
+                sendIntent.setType("text/plain");
+                startActivity(sendIntent);*/
+
+                String address[] = new String[1];
+                address[0] = "ektakakkar8993@gmail.com";
+                Intent intentemail = new Intent(Intent.ACTION_SEND);
+                intentemail.setType("*/*");
+                intentemail.putExtra(Intent.EXTRA_EMAIL, address);
+
+                intentemail.putExtra(Intent.EXTRA_SUBJECT, "Title: " + note.title);
+                intentemail.putExtra(Intent.EXTRA_TEXT,  "Details: " + note.detail);
+                if (intentemail.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intentemail);
+                }
+            break;
         }
 
             return true;
