@@ -77,12 +77,17 @@ public class MainActivity extends AppCompatActivity implements View.OnCreateCont
         recyclerView.addOnItemTouchListener(new RecyclerItemClickListener(getApplicationContext(), recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                Log.d(TAG, "onClick");
+                Notes note;
+                setPosition(position);
+                note  = allNotesFromDB.get(position);
+                long id = note.getId();
+                Intent intent = new Intent(getApplicationContext(), ViewNoteActivity.class);
+                intent.putExtra("ID", id);
+                startActivity(intent);
             }
 
             @Override
             public void onItemLongClick(View view, int position) {
-                Log.d(TAG, position + "");
                 setPosition(position);
                 view.showContextMenu();
             }

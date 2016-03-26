@@ -1,6 +1,13 @@
 package com.example.ekta.notes_taking;
 
+import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.ParcelFileDescriptor;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -9,19 +16,25 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import java.io.FileDescriptor;
+import java.io.IOException;
 
 public class AddNoteActivity extends AppCompatActivity {
 
 
 
     EditText title, detail;
+    ImageView image;
     Button buttonAdd;
     String notesval;
 
     Button delete;
     long id = -1;
     Notes note = null;
+    static int RESULT_LOAD_IMAGE = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +46,15 @@ public class AddNoteActivity extends AppCompatActivity {
         title = (EditText) findViewById(R.id.title);
         detail = (EditText) findViewById(R.id.detail);
         buttonAdd = (Button) findViewById(R.id.buttonadd);
+        image=(ImageView)findViewById(R.id.note_img);
+
+        image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(Intent.ACTION_PICK , MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(i , RESULT_LOAD_IMAGE);
+            }
+        });
 
         if (savedInstanceState == null) {
 
@@ -76,4 +98,42 @@ public class AddNoteActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(RESULT_LOAD_IMAGE == requestCode && resultCode == RESULT_OK && data !=null){
+            Uri selectedImage = data.getData();
+
+            String[] filePathCol = {MediaStore.Images.Media.DATA};
+
+            Cursor cursor = getContentResolver().query(selectedImage , filePathCol , null, null, null);
+
+            cursor.moveToFirst();
+
+            int colIndex = cursor.getColumnIndex(filePathCol[0]);
+            String picPath = cursor.getString(colIndex);
+
+            cursor.close();
+
+            Bitmap bit = null;
+
+            try {
+                bit = getBitmapFromUri(selectedImage);
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            image.setImageBitmap(bit);
+        }
+    }
+
+    private Bitmap getBitmapFromUri(Uri uri) throws IOException {
+        ParcelFileDescriptor parcelFileDescriptor =
+                getContentResolver().openFileDescriptor(uri, "r");
+        FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+        Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+        parcelFileDescriptor.close();
+        return image;
+    }
 }

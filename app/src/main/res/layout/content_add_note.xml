@@ -30,6 +30,15 @@
             android:hint="title"
             android:id="@+id/title"/>
 
+        <ImageView
+            android:layout_width="470px"
+            android:layout_height="704px"
+            android:layout_gravity="center"
+            android:src="@drawable/default_img"
+            android:clickable="true"
+            android:id="@+id/note_img"
+            />
+
         <EditText
             android:inputType="textMultiLine"
             android:layout_width="match_parent"
