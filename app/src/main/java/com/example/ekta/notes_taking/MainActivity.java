@@ -153,11 +153,6 @@ public class MainActivity extends AppCompatActivity implements View.OnCreateCont
 
             case R.id.Share:
                 note = allNotesFromDB.get(position);
-/*                Intent sendIntent = new Intent();
-                sendIntent.setAction(Intent.ACTION_SEND);
-                sendIntent.putExtra(Intent.EXTRA_TEXT, "Title: " + note.title + "\n" + "Details: " + note.detail);
-                sendIntent.setType("text/plain");
-                startActivity(sendIntent);*/
 
                 String address[] = new String[1];
                 address[0] = "ektakakkar8993@gmail.com";
@@ -174,34 +169,16 @@ public class MainActivity extends AppCompatActivity implements View.OnCreateCont
         }
 
             return true;
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
 
-    /*@Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        int pos;
-        MenuItem Bold;
-        MenuItem Italics;
-
-        Bold =(MenuItem) findViewById(R.id.Bold);
-        Italics =(MenuItem) findViewById(R.id.Italics);
-
-
-        switch (item.getItemId()){
-            case R.id.action_settings:
-                Toast.makeText(this,"Settings selected",Toast.LENGTH_LONG).show();
-
-
-            case R.id.action_bold:
-
-                Toast.makeText(this,"change to bold",Toast.LENGTH_LONG).show();
-
-
-            case R.id.action_italic:
-
-                Toast.makeText(this,"change to italics",Toast.LENGTH_LONG).show();
-        }
-        return super.onOptionsItemSelected(item);
-    }*/
+        //http://stackoverflow.com/questions/9427933/android-refresh-listview-adapter-from-another-activity
+        allNotesFromDB = (ArrayList<Notes>) Notes.getNotes();
+        notesAdapter = new NotesAdapter(allNotesFromDB);
+        recyclerView.setAdapter(notesAdapter);
+        notesAdapter.notifyDataSetChanged();
     }
 }
