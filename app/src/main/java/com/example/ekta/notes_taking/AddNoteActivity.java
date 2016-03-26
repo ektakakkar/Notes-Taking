@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.io.File;
 import java.io.FileDescriptor;
 import java.io.IOException;
 
@@ -30,7 +31,7 @@ public class AddNoteActivity extends AppCompatActivity {
     ImageView image;
     Button buttonAdd;
     String notesval;
-
+    String picPath = null;
     Button delete;
     long id = -1;
     Notes note = null;
@@ -69,6 +70,17 @@ public class AddNoteActivity extends AppCompatActivity {
                 if(note!=null){
                     detail.setText(note.detail);
                     title.setText(note.title);
+
+                    File imgFile = new  File(note.image);
+
+                    if(imgFile.exists()){
+
+                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+
+                        image.setImageBitmap(myBitmap);
+
+                    }
+
                     buttonAdd.setText("Update the Note");
                 }
             }
@@ -83,12 +95,16 @@ public class AddNoteActivity extends AppCompatActivity {
                     Notes note = new Notes();
                     note.title = notesval;
                     note.detail = detail.getText().toString();
+                    note.image = picPath;
+                    Log.d("ADDNOTE" , picPath);
                     note.save();
                     Toast.makeText(getApplicationContext(), notesval + " is saved", Toast.LENGTH_LONG).show();
                     finish();
                 }else{
                     note.detail = detail.getText().toString();
                     note.title = title.getText().toString();
+                    note.image = picPath;
+
                     note.save();
                     //Notes.update(note);
                     finish();
@@ -107,12 +123,12 @@ public class AddNoteActivity extends AppCompatActivity {
 
             String[] filePathCol = {MediaStore.Images.Media.DATA};
 
-            Cursor cursor = getContentResolver().query(selectedImage , filePathCol , null, null, null);
+            Cursor cursor = getContentResolver().query(selectedImage, filePathCol, null, null, null);
 
             cursor.moveToFirst();
 
             int colIndex = cursor.getColumnIndex(filePathCol[0]);
-            String picPath = cursor.getString(colIndex);
+            picPath = cursor.getString(colIndex);
 
             cursor.close();
 

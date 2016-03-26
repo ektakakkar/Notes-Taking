@@ -1,5 +1,7 @@
 package com.example.ekta.notes_taking;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
@@ -10,6 +12,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -38,6 +42,18 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder>{
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.details.setText(noteItems.get(position).detail);
         holder.title.setText(noteItems.get(position).title);
+
+
+        File imgFile = new  File(noteItems.get(position).image);
+
+        if(imgFile.exists()){
+
+            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+
+            holder.imageView.setImageBitmap(myBitmap);
+
+        }
+
 
     }
 

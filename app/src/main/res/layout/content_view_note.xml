@@ -26,6 +26,15 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/view_title"/>
 
+
+            <ImageView
+                android:layout_width="470px"
+                android:layout_height="704px"
+                android:layout_gravity="center"
+                android:src="@drawable/default_img"
+                android:id="@+id/note_img"
+                />
+
             <TextView
                 android:inputType="textMultiLine"
                 android:layout_width="match_parent"

@@ -24,15 +24,19 @@ public class Notes extends Model {
     @Column(name = "detail")
     public String detail;
 
+    @Column(name = "image")
+    public String image;
+
     public Notes(){
         super();
     }
 
-    public Notes(String title , String detail){
+    public Notes(String title , String detail, String image){
         super();
 
         this.title = title;
         this.detail = detail;
+        this.image = image;
     }
 
 

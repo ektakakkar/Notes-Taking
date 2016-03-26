@@ -1,19 +1,26 @@
 package com.example.ekta.notes_taking;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.File;
 
 public class ViewNoteActivity extends AppCompatActivity {
 
     TextView title;
     TextView detail;
+
+    ImageView imageView;
 
     long id = -1;
     Notes note = null;
@@ -27,6 +34,7 @@ public class ViewNoteActivity extends AppCompatActivity {
 
         title = (TextView) findViewById(R.id.view_title);
         detail = (TextView) findViewById(R.id.view_detail);
+        imageView = (ImageView) findViewById(R.id.note_img);
 
         if (savedInstanceState == null) {
 
@@ -41,6 +49,17 @@ public class ViewNoteActivity extends AppCompatActivity {
                 if(note!=null){
                     detail.setText(note.detail);
                     title.setText(note.title);
+
+
+                    File imgFile = new  File(note.image);
+
+                    if(imgFile.exists()){
+
+                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+
+                        imageView.setImageBitmap(myBitmap);
+
+                    }
 
                 }else {
 
