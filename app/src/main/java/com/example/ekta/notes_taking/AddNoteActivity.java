@@ -22,6 +22,7 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.IOException;
+import java.util.Random;
 
 public class AddNoteActivity extends AppCompatActivity {
 
@@ -151,5 +152,12 @@ public class AddNoteActivity extends AppCompatActivity {
         Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
         parcelFileDescriptor.close();
         return image;
+    }
+
+    /*In case of Id generation issues with DB, note id can be generated using this method*/
+    public long generateId(){
+        Random random = new Random();
+        long generatedId = random.nextLong();
+        return generatedId;
     }
 }

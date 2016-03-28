@@ -10,6 +10,7 @@ import com.activeandroid.query.Update;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by EKTA on 20/03/16.
@@ -38,8 +39,6 @@ public class Notes extends Model {       //active android model
         this.detail = detail;
         this.image = image;
     }
-
-
 
     public static Notes getRandom() {
         return new Select().from(Notes.class).orderBy("Title").executeSingle();
