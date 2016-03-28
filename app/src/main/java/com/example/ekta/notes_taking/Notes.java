@@ -16,9 +16,9 @@ import java.util.List;
  */
 
 @Table(name="notes")
-public class Notes extends Model {
+public class Notes extends Model {       //active android model
 
-    @Column(name = "title")
+    @Column(name = "title")               //column names of the database are title, detail and image
     public String title;
 
     @Column(name = "detail")
@@ -47,19 +47,19 @@ public class Notes extends Model {
 
 
     public static Notes getNote(long id){
-        return new Select().from(Notes.class).where("id = ?", id)
+        return new Select().from(Notes.class).where("id = ?", id)          // to get the note from the id
                 .executeSingle();
     }
 
     public static List<Notes> getNotes() {
         return new Select().from(Notes.class).execute();
-    }
+    }      // get all the notes
 
 
 
     public static void delete(Notes notes){
 
-        notes.delete();
+        notes.delete();   //deleting the notes
    }
 
 }

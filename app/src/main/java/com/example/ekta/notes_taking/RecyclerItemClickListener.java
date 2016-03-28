@@ -41,10 +41,10 @@ public class RecyclerItemClickListener implements RecyclerView.OnItemTouchListen
         mListener = listener;
 
         mGestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
-
+//Recyclerview Gesture Detection Library
             @Override
             public boolean onSingleTapUp(MotionEvent e) {
-                View childView = recyclerView.findChildViewUnder(e.getX(), e.getY());
+                View childView = recyclerView.findChildViewUnder(e.getX(), e.getY());         // gets the card that is clicked
                 mListener.onItemClick(childView, recyclerView.getChildAdapterPosition(childView));
                 return true;
 

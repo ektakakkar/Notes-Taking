@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements View.OnCreateCont
             public void onItemClick(View view, int position) {
                 Notes note;
                 setPosition(position);
-                note  = allNotesFromDB.get(position);
+                note  = allNotesFromDB.get(position);                      //open the notes on single tap
                 long id = note.getId();
                 Intent intent = new Intent(getApplicationContext(), ViewNoteActivity.class);
                 intent.putExtra("ID", id);
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity implements View.OnCreateCont
 
             @Override
             public void onItemLongClick(View view, int position) {
-                setPosition(position);
+                setPosition(position);         //shows the context menu
                 view.showContextMenu();
             }
         }));
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements View.OnCreateCont
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), AddNoteActivity.class);
+                Intent intent = new Intent(getApplicationContext(), AddNoteActivity.class);              // floating action button to add a new note
                 startActivity(intent);
 
             }
@@ -118,14 +118,14 @@ public class MainActivity extends AppCompatActivity implements View.OnCreateCont
     }
 
     public void setDataset() {
-        this.allNotesFromDB = (ArrayList<Notes>) Notes.getNotes();
+        this.allNotesFromDB = (ArrayList<Notes>) Notes.getNotes();                   //putting the database notes in to the array list
     }
 
 
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        MenuInflater inflater = getMenuInflater();
+        MenuInflater inflater = getMenuInflater();                           //create a contextual menu
         inflater.inflate(R.menu.notes_popup, menu);
     }
 
@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements View.OnCreateCont
 
             case R.id.Edit:
                 note  = allNotesFromDB.get(position);
-                long id = note.getId();
+                long id = note.getId();                                            //editing the notes
                 Intent intent = new Intent(this, AddNoteActivity.class);
                 intent.putExtra("ID", id);
                 startActivity(intent);
@@ -146,7 +146,7 @@ public class MainActivity extends AppCompatActivity implements View.OnCreateCont
             case R.id.Delete:
                 note = allNotesFromDB.get(position);
                 Notes.delete(note);
-                allNotesFromDB.remove(position);
+                allNotesFromDB.remove(position);                      //deleting the notes
                 notesAdapter.notifyDataSetChanged();
                 //deleteNote(info.id);
                 break;
@@ -155,7 +155,7 @@ public class MainActivity extends AppCompatActivity implements View.OnCreateCont
                 note = allNotesFromDB.get(position);
 
                 String address[] = new String[1];
-                address[0] = "ektakakkar8993@gmail.com";
+                address[0] = "ektakakkar8993@gmail.com";                       //Default email id                       //Sharing the notes via the email
                 Intent intentemail = new Intent(Intent.ACTION_SEND);
                 intentemail.setType("*/*");
                 intentemail.putExtra(Intent.EXTRA_EMAIL, address);
@@ -180,8 +180,8 @@ public class MainActivity extends AppCompatActivity implements View.OnCreateCont
 
         //http://stackoverflow.com/questions/9427933/android-refresh-listview-adapter-from-another-activity
         allNotesFromDB = (ArrayList<Notes>) Notes.getNotes();
-        notesAdapter = new NotesAdapter(allNotesFromDB);
-        recyclerView.setAdapter(notesAdapter);
-        notesAdapter.notifyDataSetChanged();
+        notesAdapter = new NotesAdapter(allNotesFromDB);                      //part of android activity life cycle
+        recyclerView.setAdapter(notesAdapter);                       //array list to adapter and then to recycler view
+        notesAdapter.notifyDataSetChanged();                         // refreshes the database
     }
 }

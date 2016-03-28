@@ -53,7 +53,7 @@ public class AddNoteActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(Intent.ACTION_PICK , MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(i , RESULT_LOAD_IMAGE);
+                startActivityForResult(i , RESULT_LOAD_IMAGE);                 //On clicking the default image it takes to the photo gallery.
             }
         });
 
@@ -65,15 +65,15 @@ public class AddNoteActivity extends AppCompatActivity {
 
                 id = extra.getLong("ID");
 
-                note = Notes.getNote(id);
+                note = Notes.getNote(id);                         // On clicking the edit option the contents of the notes are available
 
                 if(note!=null){
                     detail.setText(note.detail);
                     title.setText(note.title);
 
-                    File imgFile = new  File(note.image);
+                    File imgFile = new  File(note.image);           //opens the image file
 
-                    if(imgFile.exists()){
+                    if(imgFile.exists()){                          //if the image exixts then we set the image to  Imageview
 
                         Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
 
@@ -91,7 +91,7 @@ public class AddNoteActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 if(id == -1) {
-                    notesval = title.getText().toString();
+                    notesval = title.getText().toString();                      //to save the note
                     Notes note = new Notes();
                     note.title = notesval;
                     note.detail = detail.getText().toString();
@@ -101,7 +101,7 @@ public class AddNoteActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), notesval + " is saved", Toast.LENGTH_LONG).show();
                     finish();
                 }else{
-                    note.detail = detail.getText().toString();
+                    note.detail = detail.getText().toString();                //to edit the note
                     note.title = title.getText().toString();
                     note.image = picPath;
 
@@ -131,7 +131,7 @@ public class AddNoteActivity extends AppCompatActivity {
             picPath = cursor.getString(colIndex);
 
             cursor.close();
-
+                                                    // sets the image to Imageview and works database
             Bitmap bit = null;
 
             try {
@@ -145,7 +145,7 @@ public class AddNoteActivity extends AppCompatActivity {
     }
 
     private Bitmap getBitmapFromUri(Uri uri) throws IOException {
-        ParcelFileDescriptor parcelFileDescriptor =
+        ParcelFileDescriptor parcelFileDescriptor =                          //get the actual bitmap image from the uri
                 getContentResolver().openFileDescriptor(uri, "r");
         FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
         Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
