@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,9 +9,9 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:fillViewport = "true"
     tools:context="com.example.ekta.notes_taking.MainActivity"
     android:background="@android:color/white"
+    android:fillViewport="true"
     tools:showIn="@layout/activity_main">
 
 
@@ -28,14 +28,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="title"
+            android:layout_gravity="bottom|center"
             android:id="@+id/title"/>
 
         <ImageView
             android:layout_width="470px"
-            android:layout_height="704px"
-            android:layout_gravity="center"
+            android:layout_height="500px"
+            android:layout_gravity="bottom|center"
             android:src="@drawable/default_img"
             android:clickable="true"
+
             android:id="@+id/note_img"
             />
 
@@ -47,16 +49,17 @@
             android:id="@+id/detail"
             android:hint="details"
             android:textStyle="bold|italic"
+            android:layout_gravity="bottom|center"
             android:lines="4"
 
             />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="bottom|center"
             android:id="@+id/buttonadd"
             android:text="@string/text_button" />
 
     </LinearLayout>
 
-</ScrollView>
+</android.support.v4.widget.NestedScrollView>
