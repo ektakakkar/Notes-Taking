@@ -3,6 +3,7 @@ package com.example.ekta.notes_taking;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -46,25 +47,29 @@ public class ViewNoteActivity extends AppCompatActivity {
 
                 note = Notes.getNote(id);
 
-                if(note!=null){
+                if(note!=null) {
                     detail.setText(note.detail);
                     title.setText(note.title);
 
 
-                    File imgFile = new  File(note.image);
+                    if (note.image != null) {
+                        File imgFile = new File(note.image);
 
-                    if(imgFile.exists()){
+                        if (imgFile.exists()) {
 
-                        Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
 
-                        imageView.setImageBitmap(myBitmap);
+                            imageView.setImageBitmap(myBitmap);
 
+                        }
+
+                    } else {
+
+                        Toast.makeText(getApplicationContext(), "Error: Nothing to show", Toast.LENGTH_LONG).show();
+                        finish();
                     }
-
-                }else {
-
-                    Toast.makeText(getApplicationContext(), "Error: Nothing to show", Toast.LENGTH_LONG).show();
-                    finish();
+                } else{
+                    imageView.setVisibility(View.GONE);
                 }
             }
         }
@@ -81,6 +86,9 @@ public class ViewNoteActivity extends AppCompatActivity {
 
                 intentemail.putExtra(Intent.EXTRA_SUBJECT, "Title: " + title.getText().toString());
                 intentemail.putExtra(Intent.EXTRA_TEXT,  "Details: " + detail.getText().toString());
+                if(note.image!="") {
+                    intentemail.putExtra(Intent.EXTRA_STREAM, Uri.parse("file:///" + note.image));
+                }
                 if (intentemail.resolveActivity(getPackageManager()) != null) {
                     startActivity(intentemail);
                 }

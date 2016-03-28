@@ -162,6 +162,9 @@ public class MainActivity extends AppCompatActivity implements View.OnCreateCont
 
                 intentemail.putExtra(Intent.EXTRA_SUBJECT, "Title: " + note.title);
                 intentemail.putExtra(Intent.EXTRA_TEXT,  "Details: " + note.detail);
+                if(note.image!="") {
+                    intentemail.putExtra(Intent.EXTRA_STREAM, Uri.parse("file:///" + note.image));
+                }
                 if (intentemail.resolveActivity(getPackageManager()) != null) {
                     startActivity(intentemail);
                 }
