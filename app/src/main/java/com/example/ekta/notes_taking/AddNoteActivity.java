@@ -31,7 +31,7 @@ public class AddNoteActivity extends AppCompatActivity {
     ImageView image;
     Button buttonAdd;
     String notesval;
-    String picPath = null;
+    String picPath = "";
     Button delete;
     long id = -1;
     Notes note = null;
@@ -96,7 +96,7 @@ public class AddNoteActivity extends AppCompatActivity {
                     note.title = notesval;
                     note.detail = detail.getText().toString();
                     note.image = picPath;
-                    Log.d("ADDNOTE" , picPath);
+                    //Log.d("ADDNOTE" , picPath);
                     note.save();
                     Toast.makeText(getApplicationContext(), notesval + " is saved", Toast.LENGTH_LONG).show();
                     finish();

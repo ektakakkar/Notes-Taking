@@ -44,14 +44,18 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.ViewHolder>{
         holder.title.setText(noteItems.get(position).title);
 
 
-        File imgFile = new  File(noteItems.get(position).image);
+        if(noteItems.get(position).image != "") {
+            File imgFile = new File(noteItems.get(position).image);
 
-        if(imgFile.exists()){
+            if (imgFile.exists()) {
 
-            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
 
-            holder.imageView.setImageBitmap(myBitmap);
+                holder.imageView.setImageBitmap(myBitmap);
 
+            }
+        }else{
+            holder.imageView.setVisibility(View.GONE);
         }
 
 
